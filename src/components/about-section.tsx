@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code, Database, Globe, Laptop, Palette, Server } from "lucide-react";
+import { Code, Database, Globe, Laptop, Palette, Server, Brain } from "lucide-react";
 import { CardHoverEffect } from "@/components/ui/card-hover-effect";
 import { AnimatedText } from "@/components/ui/animated-text";
 
@@ -17,7 +17,7 @@ export function AboutSection() {
       icon: <Server className="h-6 w-6 text-green-500" />,
       title: "Backend",
       description:
-        "Building robust server-side applications with Node.js, Express, Fastify",
+        "Building robust server-side applications with Node.js, Express, Fastify.",
     },
     {
       icon: <Database className="h-6 w-6 text-yellow-500" />,
@@ -42,6 +42,12 @@ export function AboutSection() {
       title: "Tools",
       description:
         "Utilizing modern development tools like Git, VS Code, Postman for efficient workflows.",
+    },
+    {
+      icon: <Brain className="h-6 w-6 text-cyan-500" />,
+      title: "Generative AI",
+      description:
+        "Integrating AI tools like Gemini AI to generate content, automate responses, and enhance UX with smart features.",
     },
   ];
 
@@ -78,7 +84,7 @@ export function AboutSection() {
             viewport={{ once: true }}
             className="max-w-[700px] text-zinc-300 md:text-lg"
           >
-           I&apos;m skilled in Docker, Kubernetes, the MERN stack, and Next.js, with a strong passion for Web Development and DevOps. Lately, I've been diving into Generative AI—exploring how it intersects with full-stack development and automation. Feel free to ask me about tech, projects, or anything AI-driven!
+            I am a full-stack developer skilled in Docker, Kubernetes, and the MERN stack, with a passion for building scalable apps using Next.js. Recently, I've been diving into Generative AI tools like Gemini AI—exploring how they can automate workflows, enhance UX, and power smart web applications. Let’s connect over tech, AI, or real-time innovation!
           </motion.p>
         </div>
 
@@ -103,16 +109,14 @@ export function AboutSection() {
                 title="WEB DEVELOPER INTERN"
                 company="OctaNet Services Pvt Ltd"
                 period="Mar 2024 – Apr 2024"
-                description="Developed a fully functional e-commerce website and Integrated payment gateway and optimized UI/UX."
+                description="Developed a fully functional e-commerce website. Integrated a secure payment gateway and enhanced UI/UX for better user retention."
               />
               <TimelineItem
                 title="SDE INTERN"
                 company="ThinkNext Technologies Pvt Ltd"
                 period="Jun 2024 – Aug 2024"
-                description="Built a real-time web app using WebSockets for live data updates.Integrated Generative AI for smart responses and automation.
-Used React.js, Next.js, and Express.js in the tech stack.Focused on performance, API security, and smooth UX."
+                description="Built a real-time web application with WebSocket-based updates and Gemini AI integration for intelligent automation. Used React.js, Next.js, and Express.js with a focus on API security and performance optimization."
               />
-              
             </div>
           </div>
 
@@ -128,7 +132,6 @@ Used React.js, Next.js, and Express.js in the tech stack.Focused on performance,
             </motion.h3>
 
             <div className="space-y-6">
-              
               <TimelineItem
                 title="Bachelor of Computer Science"
                 company="HPTU"
