@@ -6,7 +6,7 @@ import { ExternalLink, Github } from "lucide-react";
 import { AnimatedGradientBorder } from "@/components/ui/animated-gradient-border";
 import { MovingBorder } from "@/components/ui/moving-border";
 import { AnimatedText } from "@/components/ui/animated-text";
-import Image from "next/image";
+ 
 
 export function ProjectsSection() {
   const categories = ["All", "Web", "UI/UX", "Backend"];
