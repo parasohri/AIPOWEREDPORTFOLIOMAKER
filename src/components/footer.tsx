@@ -17,7 +17,7 @@ const [role,setRole]=useState("")
       const result = await res.json();
 
       if (result?.project) {
-        console.log("da",result.project.username);
+        
         setName(result.project.name);
         setGithub(result.project.githublink)
         setLinkedin(result.project.linkdienlink)

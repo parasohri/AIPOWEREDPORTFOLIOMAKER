@@ -30,7 +30,7 @@ const params=useParams();
       const result = await res.json();
 
       if (result?.project) {
-        console.log("da",result.project.username);
+      
         
         setProjects(result.project.projects)
       } else {

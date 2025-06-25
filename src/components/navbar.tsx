@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 export function Navbar() {
    const params = useParams(); // This is a hook from 'next/navigation'
 
-  console.log("dw",params.id);
+   
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 const [name,setName]=useState("")

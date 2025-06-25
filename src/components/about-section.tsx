@@ -25,7 +25,7 @@ const [Education, setEducation] = useState<TimelineEntry[]>([]);
       const result = await res.json();
 
       if (result?.project) {
-        console.log("da",result.project.username);
+         
         
          setAbout(result.project.about);
          setSkills(result.project.skillsDetailed)

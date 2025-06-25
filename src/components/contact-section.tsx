@@ -23,7 +23,7 @@ useEffect(()=>{
       const result = await res.json();
 
       if (result?.project?.username) {
-        console.log("da",result.project.username);
+        
         
          setNumber(result.project.phoneno)
          setEmail(result.project.email)
