@@ -17,9 +17,13 @@ function Front() {
       alert("File size too large");
       return;
     }
-
+ if(file.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+      alert("Please upload a valid DOCx file.");
+    return;
+    }
     setIsUploading(true);
     const formData = new FormData();
+   
     formData.append("file", file);
 
     try {
