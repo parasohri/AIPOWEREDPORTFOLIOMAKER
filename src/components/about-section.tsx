@@ -4,52 +4,48 @@ import { motion } from "framer-motion";
 import { Code, Database, Globe, Laptop, Palette, Server, Brain } from "lucide-react";
 import { CardHoverEffect } from "@/components/ui/card-hover-effect";
 import { AnimatedText } from "@/components/ui/animated-text";
-
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 export function AboutSection() {
-  const skills = [
-    {
-      icon: <Code className="h-6 w-6 text-blue-500" />,
-      title: "Frontend",
-      description:
-        "Creating responsive and interactive user interfaces with React, Next.js, TypeScript, and Tailwind CSS.",
-    },
-    {
-      icon: <Server className="h-6 w-6 text-green-500" />,
-      title: "Backend",
-      description:
-        "Building robust server-side applications with Node.js, Express, Fastify.",
-    },
-    {
-      icon: <Database className="h-6 w-6 text-yellow-500" />,
-      title: "Database",
-      description:
-        "Designing and optimizing database structures with MongoDB, PostgreSQL, MySQL, and Redis.",
-    },
-    {
-      icon: <Globe className="h-6 w-6 text-purple-500" />,
-      title: "DevOps",
-      description:
-        "Deploying and maintaining applications with Docker, Kubernetes, AWS, and CI/CD pipelines.",
-    },
-    {
-      icon: <Palette className="h-6 w-6 text-pink-500" />,
-      title: "Design",
-      description:
-        "Creating beautiful and intuitive user experiences with Figma, Adobe XD, UI/UX principles, and wireframing.",
-    },
-    {
-      icon: <Laptop className="h-6 w-6 text-indigo-500" />,
-      title: "Tools",
-      description:
-        "Utilizing modern development tools like Git, VS Code, Postman for efficient workflows.",
-    },
-    {
-      icon: <Brain className="h-6 w-6 text-cyan-500" />,
-      title: "Generative AI",
-      description:
-        "Integrating AI tools like Gemini AI to generate content, automate responses, and enhance UX with smart features.",
-    },
-  ];
+  const [about, setAbout] = useState("");
+const [skills,setSkills]=useState([]);
+
+const params=useParams();
+type TimelineEntry = {
+  title: string;
+  company: string;
+  period: string;
+  description?: string;
+};
+const [Experience, setExperience] = useState<TimelineEntry[]>([]);
+const [Education, setEducation] = useState<TimelineEntry[]>([]);
+  useEffect(() => {const fetchData = async () => {
+    try { 
+      const res = await fetch(`/api/fetchdata?id=${params.id}`);
+      const result = await res.json();
+
+      if (result?.project) {
+        console.log("da",result.project.username);
+        
+         setAbout(result.project.about);
+         setSkills(result.project.skillsDetailed)
+         setEducation(result.project.Education);
+         setExperience(result.project.Experience)
+      } else {
+        console.warn("Project not found or invalid response.");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+     if (params.id) {
+    fetchData();
+  }
+    
+    
+  }, []);
+
+  
 
   return (
     <section id="about" className="py-20 bg-zinc-900">
@@ -84,7 +80,7 @@ export function AboutSection() {
             viewport={{ once: true }}
             className="max-w-[700px] text-zinc-300 md:text-lg"
           >
-            I am a full-stack developer skilled in Docker, Kubernetes, and the MERN stack, with a passion for building scalable apps using Next.js. Recently, I've been diving into Generative AI tools like Gemini AI—exploring how they can automate workflows, enhance UX, and power smart web applications. Let’s connect over tech, AI, or real-time innovation!
+            {about || "Loading..."}
           </motion.p>
         </div>
 
@@ -105,18 +101,17 @@ export function AboutSection() {
             </motion.h3>
 
             <div className="space-y-6">
-              <TimelineItem
-                title="WEB DEVELOPER INTERN"
-                company="OctaNet Services Pvt Ltd"
-                period="Mar 2024 – Apr 2024"
-                description="Developed a fully functional e-commerce website. Integrated a secure payment gateway and enhanced UI/UX for better user retention."
-              />
-              <TimelineItem
-                title="SDE INTERN"
-                company="ThinkNext Technologies Pvt Ltd"
-                period="Jun 2024 – Aug 2024"
-                description="Built a real-time web application with WebSocket-based updates and Gemini AI integration for intelligent automation. Used React.js, Next.js, and Express.js with a focus on API security and performance optimization."
-              />
+             {Experience && Experience.map((ex, idx) => (
+  <TimelineItem
+    key={idx}
+    title={ex.title}
+    company={ex.company}
+    period={ex.period}
+    description={ex.description || ""}
+  />
+))}
+
+              
             </div>
           </div>
 
@@ -132,12 +127,16 @@ export function AboutSection() {
             </motion.h3>
 
             <div className="space-y-6">
-              <TimelineItem
-                title="Bachelor of Computer Science"
-                company="HPTU"
-                period="2022 - 2026"
-                description="Focused on Programming and Software Development. Participated in multiple hackathons and coding competitions."
-              />
+             {Education && Education.map((edu, idx) => (
+  <TimelineItem
+    key={idx}
+    title={edu.title}
+    company={edu.company}
+    period={edu.period}
+    description={edu.description || ""}
+  />
+))}
+
             </div>
           </div>
         </div>

@@ -1,19 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { AnimatedText } from "@/components/ui/animated-text";
 import { AnimatedGradientBorder } from "@/components/ui/animated-gradient-border";
-
+import { useParams } from "next/navigation";
 export function ContactSection() {
+  const params=useParams();
+  const [number,setNumber]=useState('')
+  const [email,setEmail]=useState('')
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+useEffect(()=>{
+ const fetchData = async () => {
+    try { 
+      const res = await fetch(`/api/fetchdata?id=${params.id}`);
+      const result = await res.json();
 
+      if (result?.project?.username) {
+        console.log("da",result.project.username);
+        
+         setNumber(result.project.phoneno)
+         setEmail(result.project.email)
+      } else {
+        console.warn("Project not found or invalid response.");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+     if (params.id) {
+    fetchData();
+  }
+
+
+ },[params.id])
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -29,7 +55,7 @@ export function ContactSection() {
   const whatsappMessage = `Name: ${name}%0AEmail: ${email}%0ASubject: ${subject}%0AMessage: ${message}`;
 
   // WhatsApp message send via URL
-  const whatsappURL = `https://wa.me/918278821607?text=${encodeURIComponent(
+  const whatsappURL = `https://wa.me/${number}?text=${encodeURIComponent(
     whatsappMessage
   )}`;
 
@@ -54,14 +80,14 @@ export function ContactSection() {
     {
       icon: <Mail className="h-6 w-6 text-purple-500" />,
       title: "Email",
-      value: "ohriparas2005@gmail.com",
-      link: "mailto:ohriparas2005@gmail.com",
+      value: `${email}`,
+      link: `${email}`,
     },
     {
       icon: <Phone className="h-6 w-6 text-blue-500" />,
       title: "Phone",
-      value: "+91 8278821607",
-      link: "tel:+918278821607",
+      value: `${number}`,
+      link: `${number}`,
     },
     {
       icon: <MapPin className="h-6 w-6 text-green-500" />,

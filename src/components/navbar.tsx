@@ -3,19 +3,42 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
-
+import { useParams } from "next/navigation";
 export function Navbar() {
+   const params = useParams(); // This is a hook from 'next/navigation'
+
+  console.log("dw",params.id);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+const [name,setName]=useState("")
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+  const fetchData = async () => {
+    try {
+      const res = await fetch(`/api/fetchdata?id=${params.id}`);
+      const result = await res.json();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      if (result?.project?.username) {
+        setName(result.project.username);
+      } else {
+        console.warn("Project not found or invalid response.");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+
+  if (params.id) {
+    fetchData();
+  }
+
+  const handleScroll = () => {
+    setIsScrolled(window.scrollY > 50);
+  };
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [params.id]);
+
 
   return (
     <header
@@ -31,7 +54,7 @@ export function Navbar() {
           <p
             className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500"
           >
-            PARAS OHRI
+           {name}
           </p>
 
           {/* Desktop Menu */}

@@ -6,80 +6,52 @@ import { ExternalLink, Github } from "lucide-react";
 import { AnimatedGradientBorder } from "@/components/ui/animated-gradient-border";
 import { MovingBorder } from "@/components/ui/moving-border";
 import { AnimatedText } from "@/components/ui/animated-text";
- 
+ import { useEffect } from "react";
+ import { useParams } from "next/navigation";
+type Project = {
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  demoLink: string;
+  githubLink: string;
+  image?: string;
+};
 
 export function ProjectsSection() {
   const categories = ["All", "Web", "UI/UX", "Backend"];
   const [activeCategory, setActiveCategory] = useState("All");
+  const [projects, setProjects] = useState<Project[]>([]);
+const params=useParams();
+ useEffect(()=>{
+ const fetchData = async () => {
+    try { 
+      const res = await fetch(`/api/fetchdata?id=${params.id}`);
+      const result = await res.json();
 
-  const projects = [
-    {
-      title: "AI-Driven Chat App with Integrated WebContainers",
-      description:
-        "An AI-powered interactive web app that uses Gemini for natural responses, WebContainers for in-browser Node.js execution, Fastify for a scalable backend, and Socket.io for real-time updates.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "Web",
-      tags: ["React.js", "Node.js", "MongoDB", "Socket.io","webcontainers","Generativeai"],
-      demoLink: "https://youtu.be/s3tgEeDgao8?si=4Di2wPyeE4fMCNEe",
-      githubLink: "https://github.com/parasohri/AICHATAPPWITHINBUILTWEBCONTAINER",
-    },
-    {
-      title: "E-Health Platform for Remote Areas",
-      description:
-        "A collaborative task management application with real-time updates and team features.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "Web",
-      tags: ["React","Node.js","MongoDB","Generative ai chatbot","webrtc","zegocloud"],
-      demoLink: "https://hackathontesting-1-l1av.onrender.com/",
-      githubLink: "https://github.com/parasohri/himarogya",
-    },
-    {
-      title: "PIXAI",
-      description:
-        "PixAI is an AI-powered image editing and generation platform offering text-to-image creation, style filters, upscaling, background removal, image transformation, video compression, and custom model support.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "WEB",
-      tags: ["NEXT.JS", "PRISMA", "CLOUDINARY","Tailwind CSS"],
-      demoLink: "https://github.com/parasohri/pixai",
-      githubLink: "https://github.com/parasohri/pixai",
-    },
-    {
-      title: "Task Manager App",
-      description:
-        "Task Manager App with Fastify-based secure REST APIs, JWT authentication, MongoDB integration, and real-time updates",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "WEB",
-      tags: ["Fastify", "REACT", "JWT","MONGODB","REDUX"],
-      demoLink: "https://github.com/parasohri/task-manger",
-      githubLink: "http://task-manger-frontend-xi.vercel.app/",
-    },
-    {
-      title: "Blog Website",
-      description:
-        "Built a real-time app with Appwrite BaaS featuring user authentication, role-based access control, and CRUD operations on posts, comments, and tags.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "WEB",
-      tags: ["REACTJS","REDUX", "APPWRITE", "TAILWINDCSS"],
-      demoLink: "#",
-      githubLink: "https://github.com/parasohri/vlog-website-react",
-    },
-    {
-      title: "Timetable Chatbot",
-      description:
-        "Built a Fastify-React app with responsive UX, leveraging Generative AI via Gemini to parse natural language queries and deliver accurate timetable results.",
-      image: "/placeholder.svg?height=400&width=600",
-      category: "Web",
-      tags: ["React", "FASTIFY", "Generative AI","TAILWINDCSS"],
-      demoLink: "http://chatboxtimetablefrontend.vercel.app/",
-      githubLink: "https://github.com/parasohri/chatboxtimetablebackend",
-    },
-  ];
+      if (result?.project) {
+        console.log("da",result.project.username);
+        
+        setProjects(result.project.projects)
+      } else {
+        console.warn("Project not found or invalid response.");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+     if (params.id) {
+    fetchData();
+  }
 
-  const filteredProjects =
+
+ },[params.id])
+   
+  if(projects){const filteredProjects =
     activeCategory === "All"
       ? projects
       : projects.filter((project) => project.category === activeCategory);
-
+  }
   return (
     <section id="projects" className="py-20 bg-zinc-900">
       <div className="container px-4 md:px-6 mx-auto">
@@ -136,7 +108,7 @@ export function ProjectsSection() {
 
         {/* Projects */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 20 }}

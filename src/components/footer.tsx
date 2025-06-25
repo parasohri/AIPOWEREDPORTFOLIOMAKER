@@ -1,8 +1,39 @@
+"use client"
 import { Github,Linkedin} from "lucide-react";
-
+import { useState,useEffect } from "react";
+import { useParams } from "next/navigation";
 export function Footer() {
+const params=useParams();
   const currentYear = new Date().getFullYear();
+const [name,setName]=useState("");
+const [github,setGithub]=useState("");
+const [linkedin,setLinkedin]=useState("");
+const [role,setRole]=useState("")
+  useEffect(() => {
+    const stored = localStorage.getItem("portfolioData");
+   const fetchData = async () => {
+    try { 
+      const res = await fetch(`/api/fetchdata?id=${params.id}`);
+      const result = await res.json();
 
+      if (result?.project) {
+        console.log("da",result.project.username);
+        setName(result.project.name);
+        setGithub(result.project.githublink)
+        setLinkedin(result.project.linkdienlink)
+         setRole(result.project.role);
+
+      } else {
+        console.warn("Project not found or invalid response.");
+      }
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+     if (params.id) {
+    fetchData();
+  }
+  }, []);
   return (
     <footer className="border-t border-zinc-800 py-12 bg-black text-white">
       <div className="container px-4 md:px-6 mx-auto">
@@ -11,22 +42,22 @@ export function Footer() {
           {/* Branding */}
           <div className="mb-4 md:mb-0 text-center md:text-left">
             <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
-              PARAS OHRI
+          {name}
             </h3>
-            <p className="text-zinc-400">Full Stack Developer</p>
+            <p className="text-zinc-400">{role}</p>
           </div>
 
           {/* Social Media Links */}
           <div className="flex space-x-4">
             <a
-              href="https://github.com/parasohri"
+              href={github}
               aria-label="Github"
               className="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors"
             >
               <Github className="h-5 w-5 text-white" />
             </a>
             <a
-              href="https://www.linkedin.com/in/paras-ohri-76a44b190"
+              href={github}
               aria-label="LinkedIn"
               className="p-2 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors"
             >
