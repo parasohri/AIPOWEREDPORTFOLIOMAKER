@@ -41,7 +41,7 @@ export default function AppLayout({
               {isLoaded && user && (
                 <>
                   {/* Avatar */}
-                  {console.log("user", user.imageUrl)}
+               
                   
                   <div className="w-8 h-8 rounded-full overflow-hidden border border-blue-400">
                     <img
