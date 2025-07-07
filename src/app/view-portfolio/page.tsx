@@ -11,6 +11,7 @@ interface Portfolio {
   about: string;
   githublink: string;
   linkdienlink: string;
+  template: string;
 }
 
 export default function ViewPortfolio() {
@@ -19,13 +20,15 @@ export default function ViewPortfolio() {
 
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [loading, setLoading] = useState(true);
+  const [origin, setOrigin] = useState("");
 
   useEffect(() => {
-    if (!isSignedIn) {
-      alert("Please sign in to view portfolios.");
-      router.push("/sign-in");
-      return;
-    }
+    // Get origin on client side only
+    setOrigin(window.location.origin);
+  }, []);
+
+  useEffect(() => {
+     
 
     const fetchPortfolios = async () => {
       try {
@@ -45,7 +48,7 @@ export default function ViewPortfolio() {
     };
 
     fetchPortfolios();
-  }, [isSignedIn]);
+  }, [isSignedIn, router]);
 
   if (loading) return <div className="text-white p-6">Loading portfolios...</div>;
 
@@ -68,26 +71,45 @@ export default function ViewPortfolio() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {portfolios.map((portfolio) => {
-              const portfolioUrl = `${window.location.origin}/portfolio/${portfolio._id}`;
+              const portfolioUrl =
+                portfolio.template === "template-two"
+                  ? `${origin}/portfoliotwo/${portfolio._id}`
+                  : `${origin}/portfolio/${portfolio._id}`;
 
               return (
                 <div
                   key={portfolio._id}
                   className="bg-zinc-900 border border-zinc-700 p-5 rounded-lg shadow-md hover:shadow-lg transition"
                 >
-                  <h2 className="text-xl font-semibold text-white">{portfolio.username}</h2>
-                  <p className="text-sm text-gray-400 mt-1 mb-2 line-clamp-2">{portfolio.about}</p>
+                  <h2 className="text-xl font-semibold text-white">
+                    {portfolio.username}
+                  </h2>
+                  <p className="text-sm text-gray-400 mt-1 mb-2 line-clamp-2">
+                    {portfolio.about}
+                  </p>
                   <div className="text-sm text-blue-400 space-x-3">
-                    <Link href={portfolio.githublink} target="_blank" className="hover:underline">
+                    <Link
+                      href={portfolio.githublink}
+                      target="_blank"
+                      className="hover:underline"
+                    >
                       GitHub
                     </Link>
-                    <Link href={portfolio.linkdienlink} target="_blank" className="hover:underline">
+                    <Link
+                      href={portfolio.linkdienlink}
+                      target="_blank"
+                      className="hover:underline"
+                    >
                       LinkedIn
                     </Link>
                   </div>
 
                   <Link
-                    href={`/portfolio/${portfolio._id}`}
+                    href={
+                      portfolio.template === "template-two"
+                        ? `/portfoliotwo/${portfolio._id}`
+                        : `/portfolio/${portfolio._id}`
+                    }
                     className="inline-block mt-4 text-sm text-green-400 hover:underline"
                   >
                     View Full Portfolio →

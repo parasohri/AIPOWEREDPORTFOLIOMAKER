@@ -1,8 +1,8 @@
 "use client";
-
+ 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Plus, Edit, List, Star } from "lucide-react";
+import { Plus, Edit, List, Star,Cable } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
@@ -42,11 +42,18 @@ export default function Dashboard() {
       protected: true,
     },
     {
-      href: "http://parasohriresume.vercel.app/",
+      href: "/sample-portfolios",
       icon: <Star className="w-6 h-6 text-yellow-400" />,
       title: "Sample Portfolio",
       description: "Explore a sample portfolio as an example layout.",
       protected: false,
+    },
+    {
+      href: "/Changetemplate",
+      icon: <Cable className="w-6 h-6 text-yellow-400" />,
+      title: "Change Template",
+      description: "Change the template of your portfolio.",
+      protected: true,
     },
   ];
 

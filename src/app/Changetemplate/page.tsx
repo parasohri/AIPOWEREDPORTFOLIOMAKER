@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface Portfolio {
   _id: string;
@@ -22,11 +23,7 @@ export default function ViewAllPortfolios() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isSignedIn) {
-      alert("Please sign in to view portfolios.");
-      router.push("/sign-in");
-      return;
-    }
+    
 
     const fetchPortfolios = async () => {
       try {
@@ -78,12 +75,12 @@ export default function ViewAllPortfolios() {
                   <h2 className="text-xl font-semibold">{portfolio.username}</h2>
                   <p className="text-sm text-gray-400 mt-1 mb-2 line-clamp-2">{portfolio.about}</p>
                   <div className="flex gap-3 mt-4">
-                    <Link
-                      href={`/PortfolioEdit/${portfolio._id}`}
-                      className="text-sm bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition"
-                    >
-                      Edit
-                    </Link>
+                     <Button  onClick={() => {
+                      localStorage.setItem('portfolioId', portfolio._id);
+                      router.push("/Choosechangetemplate");
+                    }} className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
+                    change template
+                    </Button>
                     <Link
                       href={viewLink}
                       className="text-sm border border-green-400 text-green-400 px-4 py-1 rounded hover:bg-green-600 hover:text-white transition"

@@ -10,7 +10,15 @@ const PublishPage = () => {
 
   const handlePublish = async () => {
     setLoading(true);
+
     const rawData = localStorage.getItem("portfolioData");
+    const selectedTemplate = localStorage.getItem("selectedTemplate");
+
+    if (!selectedTemplate) {
+      alert("Please select a template before publishing.");
+      setLoading(false);
+      return;
+    }
 
     if (!rawData) {
       alert("No data found in localStorage!");
@@ -23,25 +31,29 @@ const PublishPage = () => {
       data = JSON.parse(rawData);
     } catch (error) {
       console.error("Invalid JSON in localStorage");
-      alert("Data is corrupted. Please re-enter.");
+      alert("Portfolio data is corrupted. Please re-enter.");
       setLoading(false);
       return;
     }
 
     try {
-        localStorage.setItem("po", "2");
+      localStorage.setItem("po", "2");
+
       const response = await fetch("/api/dataupload", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          data,
+          selectedTemplate, // this is a string like "modern-dark"
+        }),
       });
 
       const result = await response.json();
+
       if (response.ok) {
         alert("🎉 Portfolio published successfully!");
-      
         router.push("/view-portfolio");
       } else {
         alert("Failed to publish: " + result.error);
@@ -66,7 +78,9 @@ const PublishPage = () => {
         <button
           onClick={handlePublish}
           disabled={loading}
-          className="w-full bg-blue-600 hover:bg-blue-700 transition-all text-white font-medium py-2 px-4 rounded flex justify-center items-center gap-2"
+          className={`w-full bg-blue-600 hover:bg-blue-700 transition-all text-white font-medium py-2 px-4 rounded flex justify-center items-center gap-2 ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
           {loading ? (
             <>

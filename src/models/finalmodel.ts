@@ -80,6 +80,6 @@ template:{
   required: true,}
 })
 
-const Portfolio = mongoose.models.portfolios || mongoose.model("portfolios", portfolioSchema);
+const Portfolio = mongoose.models.final || mongoose.model("final", portfolioSchema);
 
 export default Portfolio;

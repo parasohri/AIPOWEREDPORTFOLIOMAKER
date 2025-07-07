@@ -156,10 +156,10 @@ const handleAddExperience = () => {
     // }
     alert("Portfolio updated!");
     if (!isSignedIn) {
-    alert("Please sign in to publish your portfolio.");
+ 
     }
     localStorage.setItem("po","1");
-    router.push("/Publish");
+    router.push("/choosetemplate");
   };
 
   return (
