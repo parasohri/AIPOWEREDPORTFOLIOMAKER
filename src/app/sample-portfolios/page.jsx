@@ -8,7 +8,7 @@ const templates = [
   {
     name: 'Template-One',
     slug: 'modern-dark',
-    preview: 'https://parasohriresume.vercel.app/',
+    preview: '/portfolio/686ac11123e59d8d7faae6c3',
     image: '/portfolioone.gif',
   },
   {

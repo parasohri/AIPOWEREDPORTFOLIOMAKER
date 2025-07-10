@@ -76,7 +76,8 @@ const isPublicRoute = (req: Request) => {
 const publicApiRoutes = [
   "/api/fileupload",
   "/api/geminiai",
-  "/api/fetchdata"
+  "/api/fetchdata",
+  "/api/geminiaitwo",
 ];
 
 const isPublicApiRoute = (req: Request) => {

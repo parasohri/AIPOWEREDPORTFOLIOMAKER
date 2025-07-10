@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import PortfolioAIChat from '../../../components/PortfolioAIChat/page';
 import { useParams } from 'next/navigation';
 import { useDataStore } from '../../store/Store';
 import { Boxes } from './components/ui/background-boxes';
@@ -49,7 +50,7 @@ const PortfolioPage = () => {
     <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
       {/* Background Boxes with a subtle overlay */}
       <div className="absolute inset-0 z-0">
-         
+          
         <div className="absolute inset-0 bg-black opacity-30"></div> {/* Dark overlay for better text contrast */}
       </div>
   <Vortex
@@ -61,6 +62,9 @@ const PortfolioPage = () => {
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-blue-400 to-purple-500 drop-shadow-lg animate-fade-in-down">
           {username || "Your Name"}
         </h1>
+        
+        {console.log("Data fetched:", data) /* Debugging line to check fetched data */ };
+        
         <p className="text-xl sm:text-2xl text-neutral-300 mt-4 font-light animate-fade-in-up">
           {role || "Aspiring Developer"}
         </p>
@@ -95,7 +99,7 @@ const PortfolioPage = () => {
 
       {/* Main Content Sections */}
       <main className="relative z-20 px-6 sm:px-10 md:px-20 py-10 max-w-7xl mx-auto flex flex-col gap-16">
-        {/* Skills Section */}
+        {/* Skills Section */}<PortfolioAIChat userData={data} />
         {skills.length > 0 && (
           <section className="bg-slate-800/60 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-slate-700 shadow-xl animate-fade-in-up">
             <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-cyan-400">
@@ -184,6 +188,7 @@ const PortfolioPage = () => {
 
       {/* Footer Section */}
       <footer className="relative z-20 mt-20 text-center text-sm text-neutral-500 py-8 border-t border-slate-700/60 px-4 bg-slate-950/70 backdrop-blur-sm">
+       
         <p className="break-words text-base sm:text-lg text-neutral-400 mb-3">
           Contact: {email && <a href={`mailto:${email}`} className="text-blue-400 hover:underline">{email}</a>}
           {email && phoneno && " | "}
