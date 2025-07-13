@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import React from 'react'; // useState is not used, so it can be removed if not needed elsewhere
+import React from 'react';  
 
 const templates = [
   {

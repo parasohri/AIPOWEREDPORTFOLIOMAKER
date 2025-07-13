@@ -63,7 +63,7 @@ const PortfolioPage = () => {
           {username || "Your Name"}
         </h1>
         
-        {console.log("Data fetched:", data) /* Debugging line to check fetched data */ };
+        {console.log("Data fetched:", data) /* Debugging line to check fetched data */ }
         
         <p className="text-xl sm:text-2xl text-neutral-300 mt-4 font-light animate-fade-in-up">
           {role || "Aspiring Developer"}
