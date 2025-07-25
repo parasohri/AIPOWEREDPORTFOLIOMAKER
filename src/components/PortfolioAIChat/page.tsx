@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-
+ 
 interface UserData {
     username: string;
   name: string;
@@ -67,13 +67,14 @@ ${data.projects.map((p) => `- ${p.name}: ${p.description}`).join('\n')}
 
   // Changed from Next.js Image component to standard <img> tag
   const RobotAvatar = () => (
-    <img
+     <img
       src="/robot.webp" // Using a placeholder image for the robot avatar
       alt="AI Assistant Avatar"
       width={60}
       height={60}
       className="rounded-full border-4 border-green-500 shadow-2xl animate-pulse hover:scale-110 transition-transform duration-300"
     />
+
   );
 
   return (
