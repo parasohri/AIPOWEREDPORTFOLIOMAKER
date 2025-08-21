@@ -2,8 +2,8 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from 'next/server';
-
-const genAI = new GoogleGenerativeAI("AIzaSyByJQK6P7XfBICG3hdcRL4ulIC_pBAqbb4"); // Your API key
+ 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEYONE!); // Your API key
 
 const model = genAI.getGenerativeModel({
   model: "gemini-2.0-flash",
