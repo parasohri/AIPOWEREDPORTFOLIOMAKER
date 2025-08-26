@@ -69,6 +69,7 @@ const isPublicRoute = (req: Request) => {
   // Allow dynamic route: /portfolio/:id
   if (/^\/portfolio\/[^\/]+$/.test(pathname)) return true;
   if (/^\/portfoliotwo\/[^\/]+$/.test(pathname)) return true;
+   if (/^\/Portfoliothree\/[^\/]+$/.test(pathname)) return true;
   return false;
 };
 
