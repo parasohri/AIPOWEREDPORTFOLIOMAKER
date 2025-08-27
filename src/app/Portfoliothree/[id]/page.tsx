@@ -5,7 +5,9 @@ import { useParams } from "next/navigation";
 import { useDataStore } from "../../store/Store";
 import { motion } from "motion/react";
 import { BackgroundBeamsWithCollision } from "./components/ui/background-beams-with-collision";
-
+ 
+import { CardSpotlight } from "./components/ui/card-spotlight";
+ 
 function Page() {
   const { id } = useParams();
   const { data, fetchdata } = useDataStore();
@@ -136,34 +138,40 @@ function Page() {
               Projects
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project: any, idx: number) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="p-6 bg-slate-800 rounded-xl shadow-lg flex flex-col"
-                >
-                  <h3 className="text-xl font-semibold mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-neutral-400 flex-1">
-                    {project.description}
-                  </p>
-                  {project.demoLink && (
-                    <a
-                      href={project.demoLink}
-                      target="_blank"
-                      className="mt-4 text-blue-400 hover:underline self-start"
-                    >
-                      View Project →
-                    </a>
-                  )}
-                </motion.div>
-              ))}
+{projects.map((project: any, idx: number) => (
+  <CardSpotlight key={idx} className="h-96 w-96 flex flex-col justify-between">
+    {/* Title */}
+    <p className="text-xl font-bold relative z-20 mt-2 text-white">
+      {project.title}
+    </p>
+
+    {/* Description */}
+    <p className="text-neutral-400 flex-1 mb-4 relative z-20">
+      {project.description}
+    </p>
+
+    {/* Link inside card */}
+    {project.demoLink && (
+      <a
+        href={project.demoLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative z-30 mt-auto text-blue-400 hover:underline font-medium"
+      >
+        View Project →
+      </a>
+    )}
+  </CardSpotlight>
+))}
+
+
+
+              
             </div>
           </div>
+           
         </section>
+       
       )}
 
       {/* Contact Section */}
