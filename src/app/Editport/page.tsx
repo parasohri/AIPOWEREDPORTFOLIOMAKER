@@ -69,6 +69,9 @@ export default function ViewAllPortfolios() {
               if (portfolio.template === "template-two") {
                 viewLink = `/portfoliotwo/${portfolio._id}`;
               }  
+              if (portfolio.template === "template-three") {
+                viewLink = `/Portfoliothree/${portfolio._id}`;
+              }
 
               return (
                 <div

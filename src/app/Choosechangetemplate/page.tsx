@@ -19,6 +19,11 @@ const templates = [
     preview: '/portfoliotwo/686ac11123e59d8d7faae6c3',
     image: '/portfoliotwo.gif',
   },
+    {name: 'Template-Three',
+     slug: 'template-three',
+     preview: '/Portfoliothree/686ac11123e59d8d7faae6c3',
+     image: '/portfoliothree.gif',
+    }
 ];
 
 export default function TemplateSelector() {

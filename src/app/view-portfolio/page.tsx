@@ -23,13 +23,13 @@ export default function ViewPortfolio() {
   const [origin, setOrigin] = useState("");
 
   useEffect(() => {
-    // Get origin on client side only
-    setOrigin(window.location.origin);
+    // Get origin only on client
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin);
+    }
   }, []);
 
   useEffect(() => {
-     
-
     const fetchPortfolios = async () => {
       try {
         const res = await fetch("/api/fetchportfolios");
@@ -52,6 +52,16 @@ export default function ViewPortfolio() {
 
   if (loading) return <div className="text-white p-6">Loading portfolios...</div>;
 
+  // ✅ helper to generate portfolio URL correctly
+  const getPortfolioUrl = (portfolio: Portfolio) => {
+    if (portfolio.template === "template-two") {
+      return `${origin}/portfoliotwo/${portfolio._id}`;
+    } else if (portfolio.template === "template-three") {
+      return `${origin}/portfoliothree/${portfolio._id}`;
+    }
+    return `${origin}/portfolio/${portfolio._id}`;
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-6">
       <div className="max-w-5xl mx-auto">
@@ -71,10 +81,7 @@ export default function ViewPortfolio() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {portfolios.map((portfolio) => {
-              const portfolioUrl =
-                portfolio.template === "template-two"
-                  ? `${origin}/portfoliotwo/${portfolio._id}`
-                  : `${origin}/portfolio/${portfolio._id}`;
+              const portfolioUrl = getPortfolioUrl(portfolio);
 
               return (
                 <div
@@ -88,26 +95,34 @@ export default function ViewPortfolio() {
                     {portfolio.about}
                   </p>
                   <div className="text-sm text-blue-400 space-x-3">
-                    <Link
-                      href={portfolio.githublink}
-                      target="_blank"
-                      className="hover:underline"
-                    >
-                      GitHub
-                    </Link>
-                    <Link
-                      href={portfolio.linkdienlink}
-                      target="_blank"
-                      className="hover:underline"
-                    >
-                      LinkedIn
-                    </Link>
+                    {portfolio.githublink && (
+                      <a
+                        href={portfolio.githublink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    {portfolio.linkdienlink && (
+                      <a
+                        href={portfolio.linkdienlink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        LinkedIn
+                      </a>
+                    )}
                   </div>
 
                   <Link
                     href={
                       portfolio.template === "template-two"
                         ? `/portfoliotwo/${portfolio._id}`
+                        : portfolio.template === "template-three"
+                        ? `/Portfoliothree/${portfolio._id}`
                         : `/portfolio/${portfolio._id}`
                     }
                     className="inline-block mt-4 text-sm text-green-400 hover:underline"
