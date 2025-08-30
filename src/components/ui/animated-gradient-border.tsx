@@ -1,7 +1,6 @@
 "use client"
 
-import type React from "react"
-import { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect } from "react"
 
 interface AnimatedGradientBorderProps {
   children: React.ReactNode
@@ -39,37 +38,28 @@ export const AnimatedGradientBorder = ({
 
   useEffect(() => {
     if (!animate) return
-
     const interval = setInterval(() => {
       setPosition({
         x: Math.random() * 360,
         y: Math.random() * 360,
       })
     }, duration * 1000)
-
     return () => clearInterval(interval)
   }, [animate, duration])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!hoverable) return
-
     const container = containerRef.current
     if (!container) return
-
     const rect = container.getBoundingClientRect()
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
-
     setPosition({ x, y })
     setOpacity(1)
   }
 
   const handleMouseLeave = () => {
-    if (animate) {
-      setOpacity(1)
-    } else {
-      setOpacity(0)
-    }
+    setOpacity(animate ? 1 : 0)
     setIsHovered(false)
   }
 
@@ -103,6 +93,7 @@ export const AnimatedGradientBorder = ({
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
     >
+      {/* gradient border */}
       <div
         className={`animated-gradient-border-gradient ${isHovered ? "hovered" : ""}`}
         style={{
@@ -125,20 +116,22 @@ export const AnimatedGradientBorder = ({
           transition: animate ? "opacity 0.3s ease" : "none",
         }}
       />
-      <Component
-        className={`animated-gradient-border-content ${className}`}
-        style={{
-          position: "relative",
-          background: "inherit",
-          borderRadius: "calc(var(--border-radius) - var(--border-width))",
-          height: "100%",
-          width: "100%",
-          ...style,
-        }}
-      >
-        {children}
-      </Component>
+      {/* content */}
+      {React.createElement(
+        Component,
+        {
+          className: `animated-gradient-border-content ${className}`,
+          style: {
+            position: "relative",
+            background: "inherit",
+            borderRadius: "calc(var(--border-radius) - var(--border-width))",
+            height: "100%",
+            width: "100%",
+            ...style,
+          },
+        },
+        children
+      )}
     </div>
   )
 }
-
