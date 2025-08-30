@@ -3,6 +3,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
+interface MovingBorderProps {
+  children: React.ReactNode;
+  duration?: number;
+  className?: string;
+  containerClassName?: string;
+  borderRadius?: string;
+  colors?: string[];
+  as?: React.ElementType;
+}
+
 export const MovingBorder = ({
   children,
   duration = 2000,
@@ -12,17 +22,8 @@ export const MovingBorder = ({
   colors = ["#171717", "#171717", "#171717", "#171717"],
   as: Component = "div",
   ...otherProps
-}: {
-  children: React.ReactNode;
-  duration?: number;
-  className?: string;
-  containerClassName?: string;
-  borderRadius?: string;
-  colors?: string[];
-  as?: React.ElementType;
-} & React.HTMLAttributes<HTMLDivElement>) => {
+}: MovingBorderProps & React.HTMLAttributes<HTMLElement>) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  // const [size, setSize] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
@@ -31,10 +32,9 @@ export const MovingBorder = ({
   useEffect(() => {
     if (containerRef.current) {
       const { width, height } = containerRef.current.getBoundingClientRect();
-      // setSize({ width, height });
       setMousePosition({ x: width / 2, y: height / 2 });
     }
-  }, [containerRef]);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (containerRef.current) {
@@ -52,14 +52,16 @@ export const MovingBorder = ({
     }
   };
 
-  return (
-    <Component
-      className={`relative ${containerClassName}`}
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      {...otherProps}
-    >
+  return React.createElement(
+    Component,
+    {
+      className: `relative ${containerClassName}`,
+      ref: containerRef,
+      onMouseMove: handleMouseMove,
+      onMouseLeave: handleMouseLeave,
+      ...otherProps,
+    },
+    <>
       <motion.div
         className="absolute inset-0 z-10"
         style={{
@@ -85,6 +87,6 @@ export const MovingBorder = ({
       <div className={`relative z-20 ${className}`} style={{ borderRadius }}>
         {children}
       </div>
-    </Component>
+    </>
   );
 };
