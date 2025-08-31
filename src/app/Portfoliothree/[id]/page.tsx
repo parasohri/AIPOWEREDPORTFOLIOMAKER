@@ -139,7 +139,7 @@ function Page() {
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 {projects.map((project: any, idx: number) => (
-  <CardSpotlight key={idx} className="h-96 w-96 flex flex-col justify-between">
+  <CardSpotlight key={idx} className="flex flex-col justify-between p-6 rounded-xl bg-slate-900 shadow-lg hover:shadow-pink-500/30 transition-all duration-300">
     {/* Title */}
     <p className="text-xl font-bold relative z-20 mt-2 text-white">
       {project.title}
