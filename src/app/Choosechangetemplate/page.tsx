@@ -10,18 +10,18 @@ const templates = [
   {
     name: 'Template-One',
     slug: 'modern-dark',
-    preview: '/portfolio/686ac11123e59d8d7faae6c3',
+    preview: '/portfolio/68c4e8f72368fde0a1757e4c',
     image: '/portfolioone.gif',
   },
   {
     name: 'Template-Two',
     slug: 'template-two',
-    preview: '/portfoliotwo/686ac11123e59d8d7faae6c3',
+    preview: '/portfoliotwo/68c4e8f72368fde0a1757e4c',
     image: '/portfoliotwo.gif',
   },
     {name: 'Template-Three',
      slug: 'template-three',
-     preview: '/Portfoliothree/686ac11123e59d8d7faae6c3',
+     preview: '/Portfoliothree/68c4e8f72368fde0a1757e4c',
      image: '/portfoliothree.gif',
     }
 ];
