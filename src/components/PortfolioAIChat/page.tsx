@@ -11,6 +11,7 @@ interface UserData {
   skills: string[];
   projects: { name: string; description: string }[];
   experience: string;
+  email:string
 }
 
 interface PortfolioAIChatProps {
@@ -25,15 +26,19 @@ export default function PortfolioAIChat({ userData }: PortfolioAIChatProps) {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const formatUserData = (data: UserData) => `
+  
+
 Name: ${data.name}
 About: ${data.about}
 GitHub: ${data.github}
 LinkedIn: ${data.linkedin}
 Skills: ${data.skills.join(', ')}
 Experience: ${data.experience}
+Email: ${data.email}
 Projects:
 ${data.projects.map((p) => `- ${p.name}: ${p.description}`).join('\n')}
 `;
+ 
 
   const askAI = async () => {
     if (!question.trim()) return;
@@ -52,6 +57,8 @@ ${data.projects.map((p) => `- ${p.name}: ${p.description}`).join('\n')}
       });
 
       const data = await res.json();
+      console.log("ds",data);
+      
       if (res.ok) {
         setAnswer(data.answer || "I'm designed to provide insights into this portfolio. Please ask something specific.");
       } else {

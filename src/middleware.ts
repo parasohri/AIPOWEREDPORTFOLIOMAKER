@@ -84,7 +84,7 @@ const publicApiRoutes = [
 const isPublicApiRoute = (req: Request) => {
   const url = new URL(req.url);
   const pathname = url.pathname;
-
+  if (pathname.startsWith("/api/mp")) return true;
   return publicApiRoutes.includes(pathname);
 };
 

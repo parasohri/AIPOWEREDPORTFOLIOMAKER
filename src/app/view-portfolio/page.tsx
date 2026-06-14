@@ -28,12 +28,12 @@ export default function ViewPortfolio() {
       setOrigin(window.location.origin);
     }
   }, []);
-
-  useEffect(() => {
-    const fetchPortfolios = async () => {
+const fetchPortfolios = async () => {
       try {
         const res = await fetch("/api/fetchportfolios");
         const data = await res.json();
+        console.log("data",data);
+        
 
         if (res.ok) {
           setPortfolios(data.project);
@@ -46,9 +46,15 @@ export default function ViewPortfolio() {
         setLoading(false);
       }
     };
+  useEffect(() => {
+    const id=setInterval(()=>{
+      fetchPortfolios();
+      console.log("called");
+      
+    },5000)
 
-    fetchPortfolios();
-  }, [isSignedIn, router]);
+     return ()=>clearInterval(id)
+  }, []);
 
   if (loading) return <div className="text-white p-6">Loading portfolios...</div>;
 
@@ -79,7 +85,7 @@ export default function ViewPortfolio() {
         {portfolios.length === 0 ? (
           <p className="text-gray-400 text-center">No portfolios found.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-6">
             {portfolios.map((portfolio) => {
               const portfolioUrl = getPortfolioUrl(portfolio);
 

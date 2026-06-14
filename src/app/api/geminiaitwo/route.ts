@@ -1,12 +1,11 @@
-// app/api/resume/route.ts
-
+ 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from 'next/server';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEYTWO!); // Your API key
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash",
+  model: "gemini-2.5-flash",
   generationConfig: {
     responseMimeType: "application/json",
     temperature: 0.4,
@@ -15,7 +14,7 @@ const model = genAI.getGenerativeModel({
     You are an intelligent assistant embedded in a personal portfolio website.
     You will ONLY use the provided user information to answer any question asked by the visitor.
     Never hallucinate or assume information. If something is not mentioned, politely respond that it's not available.
-    Be professional and concise in your responses.
+    Be professional and concise in your responses.if someone ask about is mentioned email correct then check email address is valid or not with particular reason
   `,
 });
 

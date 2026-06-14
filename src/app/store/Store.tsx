@@ -11,6 +11,8 @@ export const useDataStore=create<DataStore>((set) => ({
      const result = await res.json();
     if (result?.project) {
       set({ data: result.project });
+      console.log("dfs",result.project);
+      
     } else {
       console.warn("Project not found or invalid response.");
     }

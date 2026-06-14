@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEYONE!); // Your API key
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash",
+  model: "gemini-2.5-flash",
   generationConfig: {
     responseMimeType: "application/json",
     temperature: 0.4,
@@ -78,7 +78,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     const result = await model.generateContent(prompt);
     const response = result.response.text();
-
     return NextResponse.json(JSON.parse(response));
   } catch (err) {
     return NextResponse.json({ error: "Failed to process prompt", details: err }, { status: 500 });

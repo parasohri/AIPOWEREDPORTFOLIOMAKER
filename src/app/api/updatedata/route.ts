@@ -1,10 +1,12 @@
- import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/db/dbConfig";
 import Portfolio from "@/models/portfoliomodel";
 import { auth } from "@clerk/nextjs/server";
 import { identity } from "@tsparticles/engine";
  
+import mixpanel from "mixpanel-browser";
 
+mixpanel.init("606c3e4ba62824543225eb00a2ebd3c7"); // Replace with your Mixpanel token
 export async function PUT(req: NextRequest) {
   await connect();
 
@@ -12,11 +14,9 @@ export async function PUT(req: NextRequest) {
   if (!userId) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
-
-  try {
+try {
     const body = await req.json();
     const { id,updated} = body;
-
     if (!id) {
       return NextResponse.json({ message: "Portfolio ID is required" }, { status: 400 });
     }

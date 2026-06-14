@@ -3,14 +3,16 @@
 import { SignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { trackGuestContinue } from "@/lib/mixpanel.tracker";
 export default function SignInPage() {
   const router = useRouter();
   const [redirectUrl, setRedirectUrl] = useState("/Dashboard");
 
   useEffect(() => {
+    //trackGuestContinue("/Publish");
     const po = localStorage.getItem("po");
     if (po == "1") {
+      trackGuestContinue("/Publish");
       setRedirectUrl("/Publish");
     }
   }, []);
